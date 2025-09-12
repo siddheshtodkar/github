@@ -5,3 +5,9 @@ export type GithubUser = {
   html_url: string,
   bio: string
 }
+
+export type GithubUserState = {
+  userDetails: GithubUser | null,
+  loading: boolean,
+  error: string | null
+}
