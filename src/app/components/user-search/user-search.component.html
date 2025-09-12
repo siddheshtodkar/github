@@ -1,0 +1,7 @@
+<form class="form" (submit)=handleSubmit()>
+  <div class="dropdown-wrapper">
+    <input type="text" name="username" id="username" [value]="username" (change)="changeUsername($event)"
+      placeholder="Enter GitHub Username" />
+  </div>
+  <button type="submit">Search</button>
+</form>
