@@ -1,0 +1,12 @@
+<div class="user-card">
+  <img [src]="user().avatar_url" [alt]="user().name" class="avatar" />
+  <h2>{{user().name || user().login}}</h2>
+  <p class="bio">{{user().bio}}</p>
+  <div class="user-card-buttons">
+    <button class="follow-btn" [ngClass]="(isFollowing$ | async)?'following':''" (click)="followUnfollowUser()"
+      [disabled]="isLoading$ | async">
+      {{(isFollowing$ | async) ? 'Following' : 'Follow User'}}
+    </button>
+    <a [href]="user().html_url" class="profile-btn" target="_blank" rel="noopener noreferrer">View GitHub Profile</a>
+  </div>
+</div>

@@ -1,5 +1,6 @@
-import { GithubUserState } from "../types";
+import { FollowingState, GithubUserState } from "../types";
 
 export interface AppState {
-  userDetails: GithubUserState
+  userDetails: GithubUserState,
+  followingState: FollowingState
 }

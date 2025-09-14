@@ -12,9 +12,5 @@
 <div class="status err">{{error}}</div>
 }
 @if (userDetails$ | async; as user) {
-<div class="user-card">
-  <img [src]="user.avatar_url" [alt]="user.name" class="avatar" />
-  <h2>{{user.name || user.login}}</h2>
-  <p class="bio">{{user.bio}}</p>
-</div>
+  <app-user-card [user]="user"></app-user-card>
 }
