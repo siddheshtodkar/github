@@ -1,8 +1,9 @@
 import { inject, Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { GithubService } from "../services/github.service";
-import { fetchGithubUser, fetchGithubUserFailure, fetchGithubUserSuccess, followUnfollowUser, followUnfollowUserSuccess } from "./actions";
-import { catchError, map, of, switchMap } from "rxjs";
+import { fetchGithubUser, fetchGithubUserFailure, fetchGithubUserSuccess, followUnfollowUser, changeFollowing, checkFollowing, errorFollowing } from "./actions";
+import { catchError, map, of, switchMap, tap } from "rxjs";
+import { HttpErrorResponse, HttpResponse } from "@angular/common/http";
 
 @Injectable()
 export class GithubEffects {
@@ -32,8 +33,25 @@ export class FollowingEffects {
       ofType(followUnfollowUser),
       switchMap(({ username, follow }) => (
         this.service.followUnfollowUser(username, follow).pipe(
-          map(() => followUnfollowUserSuccess({ following: true })),
-          catchError(() => of(followUnfollowUserSuccess({ following: false })))
+          map(() => changeFollowing({ following: follow })),
+          catchError(() => of(errorFollowing({ error: `Failed to ${follow ? 'follow' : 'unfollow'} ${username}` })))
+        )
+      ))
+    )
+  })
+
+  checkIfFollowingUser$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(checkFollowing),
+      switchMap(({ username }) => (
+        this.service.checkIfFollowingUser(username).pipe(
+          map(() => changeFollowing({ following: true })),
+          catchError((err: HttpErrorResponse) => {
+            if (err.status == 404)
+              return of(changeFollowing({ following: false }))
+            else
+              return of(errorFollowing({ error: "Failed to fetch 'following' status" }))
+          })
         )
       ))
     )

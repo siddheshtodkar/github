@@ -29,3 +29,8 @@ export const followingUserSelector = createSelector(
   followingState,
   (state) => state.following
 )
+
+export const errorFollowingUserSelector = createSelector(
+  followingState,
+  (state) => state.error
+)

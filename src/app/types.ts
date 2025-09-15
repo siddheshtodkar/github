@@ -14,5 +14,6 @@ export type GithubUserState = {
 
 export type FollowingState = {
   following: boolean,
-  loading: boolean
+  loading: boolean,
+  error: string | null
 }

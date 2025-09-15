@@ -2,8 +2,8 @@ import { Component, inject, input, signal } from '@angular/core';
 import { GithubUser } from '../../types';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
-import { followUnfollowUser } from '../../store/actions';
-import { followingUserLoadingSelector, followingUserSelector } from '../../store/selectors';
+import { checkFollowing, followUnfollowUser } from '../../store/actions';
+import { errorFollowingUserSelector, followingUserLoadingSelector, followingUserSelector } from '../../store/selectors';
 
 @Component({
   selector: 'app-user-card',
@@ -22,10 +22,15 @@ export class UserCardComponent {
   store = inject(Store)
   isFollowing$ = this.store.select(followingUserSelector)
   isLoading$ = this.store.select(followingUserLoadingSelector)
-  followUnfollowUser() {
-    this.isFollowing$.subscribe(follow => this.store.dispatch(followUnfollowUser({ username: this.user().login, follow })))
+  isError$ = this.store.select(errorFollowingUserSelector)
+  isFollowing: boolean = false
+  constructor() {
+    this.isFollowing$.subscribe(isFollowing => this.isFollowing = isFollowing)
   }
-  ngOninit() {
-
+  followUnfollowUser() {
+    this.store.dispatch(followUnfollowUser({ username: this.user().login, follow: !this.isFollowing }))
+  }
+  ngOnChanges() {
+    this.store.dispatch(checkFollowing({ username: this.user().login }))
   }
 }

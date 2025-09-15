@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import { FollowingState, GithubUserState } from "../types";
-import { fetchGithubUser, fetchGithubUserFailure, fetchGithubUserSuccess, followUnfollowUser, followUnfollowUserSuccess } from "./actions";
+import { fetchGithubUser, fetchGithubUserFailure, fetchGithubUserSuccess, followUnfollowUser, changeFollowing } from "./actions";
 
 const initialState: GithubUserState = {
   loading: false,
@@ -16,10 +16,11 @@ export const GithubReducer = createReducer(
 
 const initialFollowingState: FollowingState = {
   loading: false,
-  following: false
+  following: false,
+  error: null
 }
 export const FollowingReducer = createReducer(
   initialFollowingState,
   on(followUnfollowUser, (state: FollowingState, { username, follow }) => ({ ...state, loading: true })),
-  on(followUnfollowUserSuccess, (state: FollowingState, { following }) => ({ ...state, following, loading: false }))
+  on(changeFollowing, (state: FollowingState, { following }) => ({ ...state, following, loading: false }))
 )

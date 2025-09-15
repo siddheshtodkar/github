@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { firstValueFrom, Observable, switchMap } from 'rxjs';
 import { GithubUser } from '../types';
 const API_URL = "https://api.github.com"
-const API_TOKEN = "https://api.github.com"
+const API_TOKEN = ""
 
 @Injectable({
   providedIn: 'root'
@@ -19,12 +19,13 @@ export class GithubService {
     return this.http.get<string[]>(`${API_URL}/search/users?q=${username}`)
   }
 
-  checkIfFollowingUser(username: string): Observable<string[]> {
+  checkIfFollowingUser(username: string) {
     return this.http.get<string[]>(`${API_URL}/user/following/${username}`, {
       headers: {
         Authorization: `Bearer ${API_TOKEN}`,
         Accept: 'application/vnd.github+json'
-      }
+      },
+      observe: 'response'
     })
   }
 
@@ -37,7 +38,7 @@ export class GithubService {
       }
     }
     if (follow)
-      return this.http.put(url, headers)
+      return this.http.put(url, null, headers)
     else
       return this.http.delete(url, headers)
   }
