@@ -6,7 +6,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideState, provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { FollowingReducer, GithubReducer } from './store/reducers';
-import { FollowingEffects, GithubEffects } from './store/effects';
+import { ErrorEffects, FollowingEffects, GithubEffects } from './store/effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,6 +14,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(),
     provideStore({ 'userDetails': GithubReducer, 'followingState': FollowingReducer }),
-    provideEffects(GithubEffects, FollowingEffects)
+    provideEffects(GithubEffects, FollowingEffects, ErrorEffects)
   ]
 };

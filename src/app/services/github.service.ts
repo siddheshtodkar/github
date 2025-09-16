@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { firstValueFrom, Observable, switchMap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { GithubUser } from '../types';
-const API_URL = "https://api.github.com"
-const API_TOKEN = ""
+import { environment } from '../../environments/environment';
+const API_URL = environment.API_URL
+const API_TOKEN = environment.API_TOKEN
 
 @Injectable({
   providedIn: 'root'

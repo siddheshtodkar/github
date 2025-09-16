@@ -4,13 +4,6 @@
   </div>
   <button type="submit">Search</button>
 </form>
-
-@if (loading$ | async) {
-<div class="status">Loading...</div>
-}
-@if (error$ | async; as error) {
-<div class="status err">{{error}}</div>
-}
 @if (userDetails$ | async; as user) {
-  <app-user-card [user]="user"></app-user-card>
+<app-user-card [user]="user"></app-user-card>
 }

@@ -5,6 +5,7 @@ import { fetchGithubUser } from '../../store/actions';
 import { fetchGithubUserErrorSelector, fetchGithubUserLoadingSelector, fetchGithubUserSelector } from '../../store/selectors';
 import { AsyncPipe } from '@angular/common';
 import { UserCardComponent } from '../user-card/user-card.component';
+import { NgxUiLoaderService } from "ngx-ui-loader";
 
 @Component({
   selector: 'app-user-search',
@@ -14,10 +15,19 @@ import { UserCardComponent } from '../user-card/user-card.component';
 })
 export class UserSearchComponent {
   store = inject(Store)
+  ngxUiLoaderService = inject(NgxUiLoaderService)
   username = signal('')
   loading$ = this.store.select(fetchGithubUserLoadingSelector)
   error$ = this.store.select(fetchGithubUserErrorSelector)
   userDetails$ = this.store.select(fetchGithubUserSelector)
+  constructor() {
+    this.loading$.subscribe(loader => {
+      if (loader)
+        this.ngxUiLoaderService.start();
+      else
+        this.ngxUiLoaderService.stop();
+    })
+  }
   handleSubmit() {
     this.store.dispatch(fetchGithubUser({ username: this.username() }))
   }
