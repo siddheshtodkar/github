@@ -34,3 +34,10 @@ export const errorFollowingUserSelector = createSelector(
   followingState,
   (state) => state.error
 )
+
+const recentSearchesState = (appState: AppState) => appState.recentSearches
+
+export const recentSearchesSelector = createSelector(
+  recentSearchesState,
+  (state) => state
+)

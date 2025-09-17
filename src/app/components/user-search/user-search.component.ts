@@ -6,10 +6,11 @@ import { fetchGithubUserErrorSelector, fetchGithubUserLoadingSelector, fetchGith
 import { AsyncPipe } from '@angular/common';
 import { UserCardComponent } from '../user-card/user-card.component';
 import { NgxUiLoaderService } from "ngx-ui-loader";
+import { RecentSearchesComponent } from '../recent-searches/recent-searches.component';
 
 @Component({
   selector: 'app-user-search',
-  imports: [FormsModule, AsyncPipe, UserCardComponent],
+  imports: [FormsModule, AsyncPipe, UserCardComponent, RecentSearchesComponent],
   templateUrl: './user-search.component.html',
   styleUrl: './user-search.component.css'
 })

@@ -2,5 +2,6 @@ import { FollowingState, GithubUserState } from "../types";
 
 export interface AppState {
   userDetails: GithubUserState,
-  followingState: FollowingState
+  followingState: FollowingState,
+  recentSearches: string[]
 }

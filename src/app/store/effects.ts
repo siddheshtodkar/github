@@ -1,7 +1,7 @@
 import { inject, Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { GithubService } from "../services/github.service";
-import { fetchGithubUser, fetchGithubUserFailure, fetchGithubUserSuccess, followUnfollowUser, changeFollowing, checkFollowing, errorFollowing } from "./actions";
+import { fetchGithubUser, fetchGithubUserFailure, fetchGithubUserSuccess, followUnfollowUser, changeFollowing, checkFollowing, errorFollowing, setRecentSearches } from "./actions";
 import { catchError, map, of, switchMap, tap } from "rxjs";
 import { HttpErrorResponse } from "@angular/common/http";
 import { toast } from "ngx-sonner";
@@ -20,6 +20,13 @@ export class GithubEffects {
           catchError(() => of(fetchGithubUserFailure({ error: 'failed to fetch user details' })))
         )
       ))
+    )
+  })
+
+  setRecentSearches$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(fetchGithubUserSuccess),
+      map(({ userDetails }) => setRecentSearches({ user: userDetails.login }))
     )
   })
 }

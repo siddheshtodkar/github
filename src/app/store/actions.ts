@@ -9,3 +9,5 @@ export const followUnfollowUser = createAction('[user card page] follow unfollow
 export const changeFollowing = createAction('[user card page] change following', props<{ following: boolean }>())
 export const errorFollowing = createAction('[user card page] error following', props<{ error: string }>())
 export const checkFollowing = createAction('[user card page] check following', props<{ username: string }>())
+
+export const setRecentSearches = createAction('[recent searches page] set recent searches', props<{ user: string }>())
