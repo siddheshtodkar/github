@@ -1,8 +1,8 @@
 import { inject, Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { GithubService } from "../services/github.service";
-import { fetchGithubUser, fetchGithubUserFailure, fetchGithubUserSuccess, followUnfollowUser, changeFollowing, checkFollowing, errorFollowing, setRecentSearches } from "./actions";
-import { catchError, map, of, switchMap, tap } from "rxjs";
+import { fetchGithubUser, fetchGithubUserFailure, fetchGithubUserSuccess, followUnfollowUser, changeFollowing, checkFollowing, errorFollowing, setRecentSearches, getSuggestions, setSuggestions } from "./actions";
+import { catchError, debounceTime, distinctUntilChanged, map, of, switchMap, tap } from "rxjs";
 import { HttpErrorResponse } from "@angular/common/http";
 import { toast } from "ngx-sonner";
 
@@ -27,6 +27,20 @@ export class GithubEffects {
     return this.actions$.pipe(
       ofType(fetchGithubUserSuccess),
       map(({ userDetails }) => setRecentSearches({ user: userDetails.login }))
+    )
+  })
+
+  getSuggestion$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(getSuggestions),
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap(({ user }) => (
+        this.service.fetchGithubUserSuggestions(user).pipe(
+          map((users: any) => setSuggestions({ users: users.items })),
+          catchError(() => of(setSuggestions({ users: [] })))
+        )
+      ))
     )
   })
 }

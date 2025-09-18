@@ -41,3 +41,10 @@ export const recentSearchesSelector = createSelector(
   recentSearchesState,
   (state) => state
 )
+
+const suggestionsState = (appState: AppState) => appState.suggestions
+
+export const suggestionsSelector = createSelector(
+  suggestionsState,
+  (state) => state
+)

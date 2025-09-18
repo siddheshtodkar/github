@@ -1,0 +1,11 @@
+@if ((users$ | async); as users) {
+@if (users.length>0) {
+<ul class="suggestions">
+  @for (user of users; track $index) {
+  <li (click)="onSelect(user.login)">
+    <img [src]="user.avatar_url" [alt]="user.login" class="avatar-xs" />{{user.login}}
+  </li>
+  }
+</ul>
+}
+}

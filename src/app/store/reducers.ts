@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
-import { FollowingState, GithubUserState } from "../types";
-import { fetchGithubUser, fetchGithubUserFailure, fetchGithubUserSuccess, followUnfollowUser, changeFollowing, setRecentSearches } from "./actions";
+import { FollowingState, GithubUser, GithubUserState } from "../types";
+import { fetchGithubUser, fetchGithubUserFailure, fetchGithubUserSuccess, followUnfollowUser, changeFollowing, setRecentSearches, getSuggestions, setSuggestions } from "./actions";
 
 const initialState: GithubUserState = {
   loading: false,
@@ -29,4 +29,10 @@ const initialRecentSearchesState: string[] = []
 export const recentSearchesReducer = createReducer(
   initialRecentSearchesState,
   on(setRecentSearches, (state, { user }) => [... new Set([user, ...state])].slice(0, 5))
+)
+
+const initialSuggestionsState: GithubUser[] = []
+export const suggestionsReducer = createReducer(
+  initialSuggestionsState,
+  on(setSuggestions, (state, { users }) => users.slice(0, 5))
 )

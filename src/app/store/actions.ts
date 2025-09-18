@@ -11,3 +11,6 @@ export const errorFollowing = createAction('[user card page] error following', p
 export const checkFollowing = createAction('[user card page] check following', props<{ username: string }>())
 
 export const setRecentSearches = createAction('[recent searches page] set recent searches', props<{ user: string }>())
+
+export const getSuggestions = createAction('[suggestions page] get suggestions', props<{ user: string }>())
+export const setSuggestions = createAction('[suggestions page] set suggestions', props<{ users: GithubUser[] }>())

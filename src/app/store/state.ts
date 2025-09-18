@@ -1,7 +1,8 @@
-import { FollowingState, GithubUserState } from "../types";
+import { FollowingState, GithubUser, GithubUserState } from "../types";
 
 export interface AppState {
   userDetails: GithubUserState,
   followingState: FollowingState,
-  recentSearches: string[]
+  recentSearches: string[],
+  suggestions: GithubUser[]
 }

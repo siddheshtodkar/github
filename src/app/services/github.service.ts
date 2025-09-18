@@ -16,8 +16,8 @@ export class GithubService {
     return this.http.get<GithubUser>(`${API_URL}/users/${username}`)
   }
 
-  fetchGithubUserSuggestions(username: string): Observable<string[]> {
-    return this.http.get<string[]>(`${API_URL}/search/users?q=${username}`)
+  fetchGithubUserSuggestions(username: string) {
+    return this.http.get(`${API_URL}/search/users?q=${username}`)
   }
 
   checkIfFollowingUser(username: string) {
